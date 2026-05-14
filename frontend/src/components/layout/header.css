@@ -1,0 +1,141 @@
+/*
+  File Name: header.css
+  Description: This CSS file defines the styles for the header and navigation bar of the webpage.
+               It includes styles for the logo, user container, navbar, navigation links, 
+               dropdown menu, and the user-specific vertical navbar. The navbar uses Flexbox 
+               to align the elements and ensures a responsive, visually appealing layout. 
+               The dropdown menu is hidden by default and becomes visible when hovering over 
+               the corresponding navbar item.
+  Team's Name: BOFC
+  Group Number: 04
+  Date: November 23, 2024
+*/
+
+/* Root variables to define colors and theme */
+:root {
+    --nav-bg-color: rgba(1, 1, 77, 0.888);
+    --user-nav-bg-color: rgba(104, 104, 208, 0.888);
+    --dropdown-bg-color: #F9DD56;
+    --dropdown-hover-color: #575757;
+    --text-color: white;
+    --text-hover-color: rgba(1, 1, 77, 0.888);
+}
+
+/* Styles for the logo image */
+.logo {
+    max-height: 100px;
+    width: auto;
+    text-align: center;
+    display: inline-block;
+    margin-inline: auto;
+}
+
+/* User container, uses Flexbox for alignment */
+.user-container {
+    display: flex; /* Utiliza Flexbox para alinear los elementos en línea horizontal */
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    gap: 8px; /* Espacio entre la imagen y el texto */
+    height: 100%; /* Asegura que el contenedor ocupe el alto disponible */
+}
+
+/* Styling for the user logo */
+.UserLogo {
+    max-height: 25px; /* Ajusta el tamaño de la imagen */
+    width: auto;
+}
+
+/* Main navbar styles */
+.navbar {
+
+    background-color: var(--nav-bg-color);    /* Change background color */
+    display: flex; /* Flexbox to align items */
+    justify-content: center; /* Center items horizontally */
+    padding: 0;
+    width: 100%; /* Full width for horizontal bar */
+    position: relative; /* This can stay if you want the navbar to be ordered relative to the page */
+    top: 0;
+    left: 0;
+}
+
+/* Styles for the navigation list (menu items) */
+.nav-list {
+
+    list-style-type: none; /* Remove bullets */
+    display: flex; /* Flexbox to display list items horizontally */
+    margin: 0;
+    padding: 0;
+    justify-content: space-around; /* Space evenly across the navbar */
+    width: 100%;
+}
+
+/* Styles for individual list items in the navbar */
+.nav-list li {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 18px;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out;
+    display: inline-block; /* Asegúrate de que cada elemento de la lista esté en bloque */
+    width: 100%;
+
+}
+
+/* Styling for the links inside the navbar list items */
+.nav-list li a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 18px;
+    padding: 15px;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Hover effect for navbar links */
+.nav-list li a:hover {
+    color: var(--text-hover-color);
+    background-color: white;
+    border: 1px solid var(--nav-bg-color);
+}
+
+/* Vertical navbar styles (for user section) */
+.vert-navbar{
+    text-align: center;
+    display: inline-block;
+    margin-inline: auto;
+    background-color: var(--user-nav-bg-color);
+    border: 1px solid var(--nav-bg-color);
+
+}
+
+/* Dropdown menu styles */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--user-nav-bg-color);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the individual items in the dropdown menu */
+.dropdown li {
+    color: var(--text-color);
+    border-bottom: 1px solid #555;
+    text-align: left;
+}
+
+/* Hover effect for dropdown items */
+.dropdown li:hover {
+    background-color: var(--dropdown-hover-color);
+}
+
+/* Shows the dropdown when the parent navbar item is hovered */
+.nav-list li:hover .dropdown {
+    display: block;
+}

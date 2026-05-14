@@ -1,0 +1,57 @@
+/* 
+  File Name: index.css
+  Description: This CSS file provides global styling for the webpage, ensuring a consistent layout 
+               and visual appeal across the entire application. It sets the basic styles for the body, 
+               headings, and footer, with attention to spacing, alignment, and color schemes.
+  Team's Name: BOFC
+  Group Number: 04
+  Date: November 23, 2024
+*/
+
+/* div{
+  border: 1px solid  rgb(176, 0, 0)    ;    
+}   */
+  
+html, body {
+  height: 100%; /* Para asegurar que la altura esté al 100% de la página */
+  width: 98%; /* Para asegurar que el contenido no sea demasiado ancho */
+  margin: 0;
+  padding: 0;
+  background-color: rgba(255, 255, 255, 0.772);
+  margin: 0 auto 
+}
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+h1{
+  color: rgb(232, 142, 39);
+  margin-top: 50px;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-align: center;
+
+}
+
+h2, h3{
+  color: rgba(1, 1, 77, 0.888);
+  margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+
+}
+
+footer {
+  bottom: 0; /* Mantener el footer en la parte inferior */
+  width: 100%; /* Asegurar que el footer cubra todo el ancho */
+  background-color: rgba(1, 1, 77, 0.888); /* Fondo del footer */
+  color: white; /* Color del texto */
+  text-align: center; /* Centrar el texto */
+  padding: 10px 0; /* Espaciado arriba y abajo */
+  font-size: small;
+}
+
+footer p {
+    margin: 0; /* Eliminar márgenes extra alrededor del texto */
+}
