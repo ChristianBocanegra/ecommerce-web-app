@@ -55,7 +55,7 @@ const Signin = () => {
 
                 });
             } else {
-                setErrorMsg(response.message);
+                setErrorMsg(response?.message || 'Invalid email or password');;
             }
         }).catch((err) => {
             setErrorMsg(err.message);

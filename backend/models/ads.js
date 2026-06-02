@@ -75,6 +75,11 @@ const AdSchema = new Schema({
   updated: { 
     type: Date, 
     default: Date.now 
+  },
+  imageUrl: {
+    type: String,
+    trim: true,
+    default: ''
   }
 }, {
   collection: 'ads'

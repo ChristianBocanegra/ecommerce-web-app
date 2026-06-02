@@ -3,16 +3,13 @@
   Description: This file defines the adModel class, which represents an advertisement entity with various properties 
                such as title, description, category, owner, and more. The class includes a constructor to initialize 
                these properties and is designed for use in a broader application context.
-  Team's name: BOFC 
-  Group number: 04
-  Date: November 23, 2024
 */
 
 // Define a class named adModel to represent an advertisement model
 class adModel {
 
      // Constructor to initialize the properties of the adModel instance
-    constructor(title, description, category, owner, userName, price, status, startDate, endDate, message, created, updated, collection) {
+    constructor(title, description, category, owner, userName, price, status, startDate, endDate, message, created, updated, collection, imageUrl) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -26,6 +23,7 @@ class adModel {
         this.created = created;
         this.updated = updated;
         this.collection = collection;
+        this.imageUrl = imageUrl;
     }
 }
 

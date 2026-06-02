@@ -13,99 +13,102 @@ import { useEffect, useState } from "react";
 import { list } from "../datasource/API-Ads";
 import { useNavigate, useLocation } from "react-router-dom";
 
-// ListInventory Component
 const ListInventory = () => {
-
     const navigate = useNavigate();
-    const location = useLocation(); // Hook para detectar cambios en la URL
+    const location = useLocation();
 
-    let [adList, setAdList] = useState([]); // Lista de anuncios
+    let [adList, setAdList] = useState([]);
     let [isLoading, setIsLoading] = useState(true);
-    let [category, setCategory] = useState('all'); // Categoría actual
+    let [category, setCategory] = useState('all');
 
-    // Effect hook to fetch data whenever the URL changes
     useEffect(() => {
+        const currentPath = location.pathname;
+        const newCategory = decodeURIComponent(currentPath.split('/').filter(Boolean).pop() || 'all');
 
-         /// Extract category from the URL path (e.g., "/Technology" or "/")
-         const currentPath = location.pathname; 
- 
-         const newCategory = decodeURIComponent(currentPath.split('/').filter(Boolean).pop() || 'all');
-
-         // Update category if it has changed
-         if (newCategory !== category) {
+        if (newCategory !== category) {
             setCategory(newCategory);
-            console.log("Category changed to:", newCategory);
         }
-    // Set loading state to true before fetching data
+
         setIsLoading(true);
-    // Fetch the ads data for the current category
-    list(newCategory).then((data) => {
-            console.log("Data fetched for category:", newCategory);
-            if (data) {
-                setAdList(data); // Update the ad list with fetched data
-            }
+        list(newCategory).then((data) => {
+            if (data) setAdList(data);
         })
         .catch((err) => {
             alert("Error fetching data: " + err.message);
             console.error(err);
         })
-        .finally(() => {
-            setIsLoading(false);
-        });
-    }, [location.pathname]);  // Dependency array: re-run the effect whenever the URL changes
+        .finally(() => setIsLoading(false));
+    }, [location.pathname]);
+
+    const placeholderImage = (category) => {
+        const placeholders = {
+            "Technology": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80",
+            "Home & Kitchen": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80",
+            "Videogames": "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&q=80",
+            "Musical Instruments": "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&q=80",
+        };
+        return placeholders[category] || "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400&q=80";
+    };
 
     return (
-        <main className="container" style={{ paddingTop: 5 }}>
-            <div className="row">
-                <h1>Products List</h1>
-                <br />
-                <br />
-                <div className="table-responsive">
-                    {isLoading && <div>Loading...</div>}
-                    {!isLoading && adList.length === 0 && <div>Unfortunately there is no products in this category</div>}
-                    {!isLoading && adList.length > 0 && 
-                        <table className="table table-bordered table-striped table-hover" style={{ tableLayout: 'fixed', borderSpacing: '15px 0' }}>
-                            <thead>
-                                {/* -- Header Row-- */}
-                                <tr>
-                                    <th style={{ textAlign: 'center' }}>Title</th>
-                                    <th style={{ textAlign: 'center' }}>Category</th>
-                                    <th style={{ textAlign: 'center' }}>Price</th>
-                                    <th style={{ textAlign: 'center' }}>Start Date</th>
-                                    <th style={{ textAlign: 'center' }}>End Date</th>
-                                    <th style={{ textAlign: 'center' }}>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/* Filtrar y mapear los elementos según la categoría */}
-                                {adList
-                                    .filter((ad) => category === 'all' || ad.category === category) // Filtrar por categoría
-                                    .map((ad, i) => (
-                                        <tr key={i}>
-                                            {console.log(ad)}
-                                            <td className="text-center"> {ad.title || ''} </td>
-                                            <td className="text-center"> {ad.category || ''} </td>
-                                            <td className="text-center"> {ad.price || ''} </td>
-                                            <td className="text-center"> {new Date(ad.startDate).toLocaleDateString()}</td>
-                                            <td className="text-center"> {new Date(ad.endDate).toLocaleDateString()}</td>
+        <main className="container" style={{ paddingTop: 24 }}>
+            <h1 style={{ color: '#1a1a6e', fontWeight: 700, marginBottom: 24 }}>Products List</h1>
 
-                                            <td className="text-center">
-                                                <button
-                                                    className="btn btn-info btn-sm me-1"
-                                                    onClick={() => navigate(`/Home/Ads/Details/${ad.id}`)}
-                                                >
-                                                    Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>}
+            {isLoading && <div className="text-center py-5">Loading...</div>}
+
+            {!isLoading && adList.length === 0 && (
+                <div className="text-center py-5 text-muted">
+                    Unfortunately there are no products in this category.
                 </div>
+            )}
+
+            {/* Cards Grid */}
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {adList
+                    .filter((ad) => category === 'all' || ad.category === category)
+                    .map((ad, i) => (
+                        <div className="col" key={i}>
+                            <div className="card h-100 shadow-sm" style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid #e0e0e0' }}>
+
+                                {/* Product Image */}
+                                <img
+                                    src={ad.imageUrl || placeholderImage(ad.category)}
+                                    alt={ad.title}
+                                    style={{ width: '100%', height: 200, objectFit: 'cover' }}
+                                    onError={(e) => { e.target.src = placeholderImage(ad.category); }}
+                                />
+
+                                <div className="card-body d-flex flex-column">
+                                    {/* Title */}
+                                    <h5 className="card-title" style={{ fontWeight: 600 }}>{ad.title}</h5>
+
+                                    {/* Category */}
+                                    <p className="text-muted small mb-1">{ad.category}</p>
+
+                                    {/* Price */}
+                                    <p style={{ fontSize: 22, fontWeight: 700, color: '#e07b00' }}>${ad.price}</p>
+
+                                    {/* Dates */}
+                                    <p className="text-muted small mb-3">
+                                        {new Date(ad.startDate).toLocaleDateString()} → {new Date(ad.endDate).toLocaleDateString()}
+                                    </p>
+
+                                    {/* Details Button */}
+                                    <div className="mt-auto">
+                                        <button
+                                            className="btn btn-outline-primary btn-sm w-100"
+                                            onClick={() => navigate(`/Home/Ads/Details/${ad.id}`)}
+                                        >
+                                            View Details
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
             </div>
         </main>
     );
 };
 
-// Export the ListInventory component
 export default ListInventory;

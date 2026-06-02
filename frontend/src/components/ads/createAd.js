@@ -202,7 +202,24 @@ const CreateAd = () => {
                             />
                         </div>
 
+                        <br />  
+
+                        <div className="form-group">
+                            <label htmlFor="imageUrlTextField">Image URL:</label>
+                            &nbsp;&nbsp;
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="imageUrlTextField"
+                                placeholder="Paste an image URL (optional)"
+                                name="imageUrl"
+                                value={ad.imageUrl || ""}
+                                onChange={handleChange}
+                            />
+                        </div>    
+
                         <br />
+
                         <div className="form-group">
                             <button className="btn btn-primary" type="submit">
                                 <i className="fas fa-edit"></i> Submit
